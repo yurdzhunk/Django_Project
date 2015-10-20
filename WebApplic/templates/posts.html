@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{% block post %}
+<div class="large-8 columns">
+{% for post in posts %}
+    <h6>Дата:{{post.date}}</h6>
+    <a href="http://127.0.0.1:8000/posts/get/{{ post.id }}/">{{post.title}}</a>
+    <p>{{post.text}}</p>
+    <p><a href="/addlike/{{ post.id }}/{{ posts.number }}/" ><img src="{%static "like.jpg" %}" width="25px" height="25px">{{post.likes}}</a></p>
+    <hr>
+{% endfor %}
+</div>
+    <div class="row">
+        <div class="large-3 large-offset-5 columns">
+            <ul class="pagination">
+                {% if posts.has_previous %}
+                    <li class="arrow"><a href="/allposts/{{ posts.previous_page_number }}">&laquo</a> </li>
+                {% else %}
+                    <li class="arrow unavailable"><a href="">&laquo</a> </li>
+                {% endif %}
+                {% for page in posts.paginator.page_range %}
+                    {% if page == posts.number %}
+                        <li class="current"><a href="/allposts/{{ page }}/">{{ page }}</a> </li>
+                    {% else %}
+                        <li><a href="/allposts/{{ page }}/">{{ page }}</a> </li>
+                    {% endif %}
+                {% endfor %}
+                {% if posts.has_next %}
+                    <li class="arrow"><a href="/allposts/{{ posts.next_page_number }}/">&raquo</a> </li>
+                {% else %}
+                    <li class="arrow unavailable"><a href="">&raquo</a> </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

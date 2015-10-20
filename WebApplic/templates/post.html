@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block post %}
+<h4>Дата:{{ post.date }}</h4>
+<h2>{{ post.title }}</h2>
+<p>{{ post.text}}</p>
+<hr>
+<p>Коментарии</p>
+{% for comment in comments %}
+    <h4>{{ comment.text }}</h4>
+    <h4>{{ comment.author.username }}    {{ comment.date }}</h4>
+    <hr>
+{% endfor %}
+    {% if username %}
+        <form action="/addcomment/{{ post.id }}/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" class="button" value="Add comment">
+        </form>
+    {% endif %}
+{% endblock %}
